@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="margin-bottom: 5px;">
-            <el-input v-model="name" placeholder="请输入物品名" suffix-icon="el-icon-search" style="width: 200px;"
+            <el-input v-model="name"   maxlength="5"  placeholder="请输入物品名" suffix-icon="el-icon-search" style="width: 200px;"
                       @keyup.enter.native="loadPost"></el-input>
             <el-select v-model="storage" placeholder="请选择仓库" style="margin-left: 5px;">
                 <el-option
@@ -29,8 +29,8 @@
                   :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
                   border
         >
-            <el-table-column prop="id" label="ID" width="60">
-            </el-table-column>
+<!--            <el-table-column prop="id" label="ID" width="60">-->
+<!--            </el-table-column>-->
             <el-table-column prop="goodsname" label="物品名" width="180">
             </el-table-column>
             <el-table-column prop="storagename" label="仓库" width="180">
@@ -52,7 +52,7 @@
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="pageNum"
-                :page-sizes="[5, 10, 20,30]"
+                :page-sizes="[6,12]"
                 :page-size="pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="total">
@@ -67,10 +67,11 @@
 
             return {
                 user : JSON.parse(sessionStorage.getItem('CurUser')),
+                // 获取User对象
                 storageData:[],
                 goodstypeData:[],
                 tableData: [],
-                pageSize:10,
+                pageSize:12,
                 pageNum:1,
                 total:0,
                 name:'',
@@ -169,8 +170,7 @@
         beforeMount() {
             this.loadStorage()
             this.loadGoodstype()
-            this.loadPost()
-
+            this.loadPost()     //最后刷新数据
         }
     }
 </script>

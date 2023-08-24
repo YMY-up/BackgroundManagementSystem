@@ -8,9 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="wms" />
+        <module name="ruoyi-admin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ruoyi-admin" target="1.8" />
+      <module name="springboot-vue-wms01" target="1.8" />
       <module name="wms" target="1.8" />
     </bytecodeTargetLevel>
   </component>

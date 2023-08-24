@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom: 5px">
-      <el-input v-model="name" placeholder="请输入姓名"  suffix-icon="el-icon-search" style="width: 110px"
+      <el-input v-model="name"  maxlength="5" placeholder="请输入姓名"  suffix-icon="el-icon-search" style="width: 110px"
                 @keyup.enter.native="loadPost"></el-input>
       <el-select v-model="sex" filterable placeholder="请选择性别" style="width:120px ;margin-left: 5px ">
         <el-option
@@ -14,14 +14,16 @@
       <el-button type="primary" style=" margin-left: 5px" @click="loadPost">查询</el-button>
       <el-button type="success" @click="resetParam">重置</el-button>
       <el-button type="primary" style=" margin-left: 5px" @click="add" >新增</el-button>
+      <el-button type="danger" @click="batchDelect" :disabled="this.sels.length === 0">批量删除</el-button>
 
     </div>
-    <el-table :data="tableData"
-              :header-cell-style="{ background:'#f2f5fc',color:'#555'}"
-              border
+    <div class="TableList">
+      <el-table :data="tableData" :header-cell-style="{ background: '#f2f5fc', color: '#555' }" border
+                @selection-change="handleSelectionChange">
     >
-      <el-table-column prop="id" label="ID" width="60">
-      </el-table-column>
+<!--      <el-table-column prop="id" label="ID" width="60">-->
+<!--      </el-table-column>-->
+        <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column prop="no" label="账号" width="180">
       </el-table-column>
       <el-table-column prop="name" label="姓名" width="120">
@@ -43,18 +45,16 @@
               (scope.row.roleId === 1 ? '管理员' : '普通用户')}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="电话" width="180">
-      </el-table-column>
-
+      <el-table-column prop="phone" label="电话" width="180"></el-table-column>
       <el-table-column prop="operate" label="操作" >
         <template slot-scope="scope">
-          <el-button type="success" size=small style="margin-left:90px" @click="mod(scope.row)">编辑</el-button>
+          <el-button type="success" size=small style="margin-left:60px" @click="mod(scope.row)">编辑</el-button>
           <el-popconfirm
               title="确定删除吗？"
               @confirm="del(scope.row.id)"
               style="margin-left: 5px"
           >
-            <el-button slot="reference" type="danger" size="small"style="margin-left: 80px" >删除</el-button>
+            <el-button slot="reference" type="danger" size="small"style="margin-left: 40px" >删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -80,22 +80,29 @@
       <el-form ref="form" :rules="rules" :model="form" label-width="80px">
         <el-form-item label="账号" prop="no">
           <el-col :span="20">
-            <el-input v-model="form.no"></el-input>
+            <el-input v-model="form.no" maxlength="10"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="新密码" prop="pwd_new1">
           <el-col :span="20">
-            <el-input v-model="form.password"></el-input>
+            <el-input v-model="form.pwd_new1" maxlength="10"></el-input>
+          </el-col>
+        </el-form-item>
+      </el-form>
+      <el-form ref="form" :rules="rules" :model="form" label-width="100px">
+        <el-form-item label="确认新密码" prop="pwd_new2" >
+          <el-col :span="20">
+            <el-input v-model="form.pwd_new2" maxlength="10"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="姓名" prop="name">
           <el-col :span="20">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" maxlength="10"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="年龄" prop="age">
           <el-col :span="20">
-            <el-input v-model="form.age"></el-input>
+            <el-input v-model="form.age" maxlength="10"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="性别">
@@ -106,7 +113,7 @@
         </el-form-item>
         <el-form-item label="电话"prop="phone">
           <el-col :span="20">
-            <el-input v-model="form.phone"></el-input>
+            <el-input v-model="form.phone" maxlength="11"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
@@ -115,6 +122,7 @@
           <el-button type="primary" @click="save">确 定</el-button>
         </span>
     </el-dialog>
+  </div>
   </div>
 </template>
 
@@ -144,6 +152,7 @@ export default {
       }
     };
     return {
+      sels: [], //当前选框选中的值
       // 默认数值
 
       tableData: [],
@@ -170,7 +179,9 @@ export default {
         age: '',
         phone: '',
         sex: '0',
-        roleId: '2'
+        roleId: '2',
+        pwd_new1: '',
+        pwd_new2: ''
       },
       rules: {
         no: [
@@ -195,6 +206,14 @@ export default {
         phone: [
           {required: true,message: "⼿机号不能为空",trigger: "blur"},
           {pattern: /^1[2|3|4|5|6|7|8|9][0-9]\d{8}$/, message: "请输⼊正确的⼿机号码", trigger: "blur"}
+        ],
+        pwd_new1: [
+          {required: true, message: '请输入新密码', trigger: 'blur'},
+          {min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur'}
+        ]
+        ,pwd_new2: [
+          {required: true, message: '请确认新密码', trigger: 'blur'},
+          {min: 3, max: 8, message: '长度在 3 到 8 个字符', trigger: 'blur'}
         ]
       }
     }
@@ -202,6 +221,27 @@ export default {
 
   /*------------------------方法--------------------------*/
   methods: {
+    //获取选中的值
+    handleSelectionChange(sels) {
+      this.sels = sels;
+      console.log("选中的值", sels.map((item) => item.id));
+    },
+    //批量删除执行操作
+    batchDelect() {
+      // 删除前的提示
+      this.$confirm("确认删除记录吗?", "提示", {
+        type: "warning",
+      }).then(() => {
+        let ids = this.sels.map((item) => item.id);
+        // 根据后台想要的参数格式选择
+        console.log(ids.join(",")); //1,2,3,4
+        console.log(ids); //[1,2,3,4]
+        for (const id of ids) {
+          console.log("id=" + id)
+          this.del(id)
+        }
+      });
+    },
     // 验证信息
     resetForm() {
       this.$refs.form.resetFields();
@@ -211,9 +251,9 @@ export default {
       console.log(id)
       this.$axios.get(this.$httpUrl+'/user/del?id='+id).then(res=>res.data).then(res=>{
         console.log(res)
-        if (res.code ==200){
+        if (res.code == 200){
           this.$message({
-            message: '操作成功',
+            message: '删除成功',
             type: 'success'
           });
           this.loadPost()
@@ -256,7 +296,7 @@ export default {
         console.log(res)
         if (res.code ==200){
           this.$message({
-            message: '操作成功',
+            message: '添加成功',
             type: 'success'
           });
           this.dialogVisible = false
@@ -272,24 +312,27 @@ export default {
       })
     },
     doMod(){
-      this.$axios.post(this.$httpUrl+'/user/update',this.form).then(res=>res.data).then(res=>{
-        console.log(res)
-        if (res.code ==200){
-          this.$message({
-            message: '操作成功',
-            type: 'success'
-          });
-          this.dialogVisible = false
-          // 重新加载数据
-          this.loadPost()
-          this.resetForm()
-        }else {
-          this.$message({
-            message: '操作失败',
-            type: 'error'
-          });
-        }
-      })
+      if (this.form.pwd_new1 === this.form.pwd_new2){
+        this.form.password = this.form.pwd_new2
+        this.$axios.post(this.$httpUrl+'/user/update',this.form).then(res=>res.data).then(res=>{
+          console.log(res)
+          if (res.code ==200){
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            });
+            this.dialogVisible = false
+            // 重新加载数据
+            this.loadPost()
+            this.resetForm()
+          }
+        })
+      }else {
+        this.$message({
+          message: '输入的两次密码不一致',
+          type: 'error'
+        });
+      }
     },
     // 保存并刷新
     save(){

@@ -1,6 +1,7 @@
 import vue from 'vue'
 import Vuex from 'vuex'
-import router,{resetRouter} from "../router";
+import router,{resetRouter} from "../router"
+import createPersistedState from 'vuex-persistedstate'
 vue.use(Vuex)
 
 
@@ -10,16 +11,16 @@ function addNewRoute(menuList) {
     console.log(routes)
     console.log(menuList)
     routes.forEach(routeItem=>{
-        if (routeItem.path=="/Index"){
+        if (routeItem.path == "/Index"){
             menuList.forEach(menu=>{
                 let  childRoute = {
                     /*子路由*/
-                        path: '/'+menu.menuclick,
-                        name: menu.menuname,
+                        path: '/'+menu.menuClick,
+                        name: menu.menuName,
                         meta: {
-                            title: menu.menuname
+                            title: menu.menuName
                         },
-                        component:()=>import('../components/'+menu.menucomponent)
+                        component:()=>import('../components/'+menu.menuComponent)
                 }
                 routeItem.children.push(childRoute)
             })
@@ -34,6 +35,7 @@ export default new Vuex.Store( {
         menu: []
     },
     mutations: {
+
         setMenu(state,menuList) {
             state.menu = menuList
 
@@ -44,5 +46,6 @@ export default new Vuex.Store( {
         getMenu(state) {
             return state.menu
         }
-    }
+    },
+    plugins: [createPersistedState()]       // 刷新 后持久化
 })

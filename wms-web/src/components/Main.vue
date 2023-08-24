@@ -162,6 +162,7 @@ export default {
         }
       ],
       dialogVisible: false,
+      handleClose:'' ,
       form: {
         id:'',
         name:'',

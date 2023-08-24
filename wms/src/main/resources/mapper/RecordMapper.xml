@@ -3,13 +3,12 @@
 <mapper namespace="com.wms.mapper.RecordMapper">
 
     <select id="pageCC" resultType="com.wms.entity.RecordRes">
+        /* 子查询 */
          select a.*,b.name goodsname,c.name storagename,d.name goodstypename,
         (select u.name from user u where u.id=a.userid)username,
         (select u.name from user u where u.id=a.admin_id)adminname
-         from record a ,goods b,storage c,goodsType d
-        /* where a.goods=b.id
-         and b.storage=c.id and b.goodsType=d.id*/
-        ${ew.customSqlSegment}
+         from record a ,goods b,storage c,goodstype d
+         ${ew.customSqlSegment}
     </select>
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wms.entity.Record">

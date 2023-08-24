@@ -14,7 +14,7 @@
         id, name, remark
     </sql>
     <select id="pageCC" resultType="com.wms.entity.Goodstype">
-        select * from goodsType ${ew.customSqlSegment}
+        select * from goodstype ${ew.customSqlSegment}
     </select>
 
 </mapper>

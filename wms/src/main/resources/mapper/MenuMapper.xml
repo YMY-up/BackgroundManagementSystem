@@ -5,19 +5,21 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.wms.entity.Menu">
         <id column="id" property="id" />
-        <result column="menuCode" property="menucode" />
-        <result column="menuName" property="menuname" />
-        <result column="menuLevel" property="menulevel" />
-        <result column="menuParentCode" property="menuparentcode" />
-        <result column="menuClick" property="menuclick" />
-        <result column="menuRight" property="menuright" />
-        <result column="menuComponent" property="menucomponent" />
-        <result column="menuIcon" property="menuicon" />
+        <result column="menu_code" property="menuCode" />
+        <result column="menu_name" property="menuName" />
+        <result column="menu_level" property="menuLevel" />
+        <result column="menu_click" property="menuClick" />
+        <result column="menu_right" property="menuRight" />
+        <result column="menu_component" property="menuComponent" />
+        <result column="menu_icon" property="menuIcon" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, menuCode, menuName, menuLevel, menuParentCode, menuClick, menuRight, menuComponent, menuIcon
+        id, menu_code, menu_name, menu_level, menu_click, menu_right, menu_component, menu_icon
     </sql>
+    <select id="pageCC" resultType="com.wms.entity.Menu">
+        select * from menu ${ew.customSqlSegment}
+    </select>
 
 </mapper>

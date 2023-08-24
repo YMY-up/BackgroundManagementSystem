@@ -4,21 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wms.entity.Storage;
 import com.wms.mapper.StorageMapper;
-import com.wms.mapper.UserMapper;
 import com.wms.service.StorageService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-/**
- * <p>
- *  服务实现类
- * </p>
- *
- * @author wms
- * @since 2023-07-28
- */
+
 @Service
 public class StorageServiceImpl extends ServiceImpl<StorageMapper, Storage> implements StorageService {
     @Resource

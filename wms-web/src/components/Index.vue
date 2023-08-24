@@ -11,7 +11,6 @@
       </el-header>
 
       <el-main style="height: 100%;">
-<!--       <Main></Main>-->
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -22,7 +21,6 @@
 <script>
   import Aside from "@/components/Aside.vue";
   import Header from "@/components/Header.vue";
-  // import Main from "@/components/Main.vue";
 
   export default {
     name: "Index",

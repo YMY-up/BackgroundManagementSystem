@@ -3,56 +3,63 @@ import VueRouter from 'vue-router';
 
 const routes = [
     {
-        path:'/',
-        name:'login',
-        component:()=>import('../components/Login')
+        path: '/',
+        name: 'login',
+        component: () => import('../components/Login')
     },
     {
-        path:'/Index',
-        name:'index',
-        component:()=>import('../components/Index'),
-        children:[
+        path: '/Index',
+        name: 'index',
+        component: () => import('../components/Index'),
+        meta: {
+            requireAuth: true
+        },
+        children: [
             {
-                path:'/Home',
-                name:'home',
-                meta:{
-                    title:'首页'
+                path: '/Calendar',
+                name: 'calendar',
+                meta: {
+                    title: '首页',
+
                 },
-                component:()=>import('../components/Home')
+                component: () => import('../components/Calendar.vue')
+            }, {
+                path: '/Home',
+                name: 'home',
+                meta: {
+                    title: '首页'
+                },
+                component: () => import('../components/Home.vue')
             },
-            /*{
-                path:'/Admin',
-                name:'admin',
-                meta:{
-                    title:'管理员管理'
-                },
-                component:()=>import('../components/admin/AdminManage.vue')
-            },
-            {
-                path:'/User',
-                name:'user',
-                meta:{
-                    title:'用户管理'
-                },
-                component:()=>import('../components/user/UserManage.vue')
-            },*/
         ]
     }
 ]
 
 const router = new VueRouter({
-    mode:'history',
+    mode: 'history',
     routes
 })
 
 export function resetRouter() {
     router.matcher = new VueRouter({
-        mode:'history',
+        mode: 'history',
         routes: []
     }).matcher
 }
 const VueRouterPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (to) {
+VueRouter.prototype.push = function push(to) {
     return VueRouterPush.call(this, to).catch(err => err)
 }
-export  default router;
+
+router.beforeEach((to, from, next) => {
+    if (to.path == '/' || sessionStorage.getItem('CurUser')) {
+        next();
+    } else {
+        alert('请重新登录');
+        next('/');
+    }
+
+})
+
+
+export default router;

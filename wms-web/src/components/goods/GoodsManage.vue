@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom: 5px;">
-      <el-input v-model="name" placeholder="请输入物品名" suffix-icon="el-icon-search" style="width: 200px;"
+      <el-input v-model="name" maxlength="5"  placeholder="请输入物品名" suffix-icon="el-icon-search" style="width: 200px;"
                 @keyup.enter.native="loadPost"></el-input>
       <el-select v-model="storage" placeholder="请选择仓库" style="margin-left: 5px;">
         <el-option
@@ -24,8 +24,8 @@
       <el-button type="success" @click="resetParam">重置</el-button>
 
       <el-button type="primary" style="margin-left: 5px;" @click="add" v-if="user.roleId!=2">新增</el-button>
-<!--      <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button>-->
-<!--      <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2">出库</el-button>-->
+      <el-button type="primary" style="margin-left: 5px;" @click="inGoods" v-if="user.roleId!=2">入库</el-button>
+      <el-button type="primary" style="margin-left: 5px;" @click="outGoods" v-if="user.roleId!=2" >出库</el-button>
     </div>
     <el-table :data="tableData"
               :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
@@ -33,8 +33,8 @@
               highlight-current-row
               @current-change="selectCurrentChange"
     >
-      <el-table-column prop="id" label="ID" width="60">
-      </el-table-column>
+<!--      <el-table-column prop="id" label="ID" width="60">-->
+<!--      </el-table-column>-->
       <el-table-column prop="name" label="物品名" width="180">
       </el-table-column>
       <el-table-column prop="storage" label="仓库" width="180" :formatter="formatStorage">
@@ -47,13 +47,13 @@
       </el-table-column>
       <el-table-column prop="operate" label="操作" v-if="user.roleId!=2">
         <template slot-scope="scope">
-          <el-button size="small" type="success" @click="mod(scope.row)">编辑</el-button>
+          <el-button size="small" type="success" @click="mod(scope.row)"style="margin-left: 12px">编辑</el-button>
           <el-popconfirm
               title="确定删除吗？"
               @confirm="del(scope.row.id)"
               style="margin-left: 5px;"
           >
-            <el-button slot="reference" size="small" type="danger" >删除</el-button>
+            <el-button slot="reference" size="small" type="danger"  style="margin-left: 8px">删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -77,7 +77,7 @@
       <el-form ref="form" :rules="rules" :model="form" label-width="80px">
         <el-form-item label="物品名" prop="name">
           <el-col :span="20">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" maxlength="10" ></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="仓库" prop="storage">
@@ -107,12 +107,12 @@
         </el-form-item>
         <el-form-item label="数量" prop="count">
           <el-col :span="20">
-            <el-input v-model="form.count"></el-input>
+            <el-input v-model="form.count" maxlength="5"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-col :span="20">
-            <el-input type="textarea" v-model="form.remark"></el-input>
+            <el-input type="textarea" v-model="form.remark" maxlength="20"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
@@ -122,51 +122,51 @@
   </span>
     </el-dialog>
 
-<!--    <el-dialog-->
-<!--        title="出入库"-->
-<!--        :visible.sync="inDialogVisible"-->
-<!--        width="30%"-->
-<!--        center>-->
+    <el-dialog
+        title="出入库"
+        :visible.sync="inDialogVisible"
+        width="30%"
+        center>
 
-<!--      <el-dialog-->
-<!--          width="75%"-->
-<!--          title="用户选择"-->
-<!--          :visible.sync="innerVisible"-->
-<!--          append-to-body>-->
-<!--        <SelectUser @doSelectUser="doSelectUser"></SelectUser>-->
-<!--        <span slot="footer" class="dialog-footer">-->
-<!--                    <el-button @click="innerVisible = false">取 消</el-button>-->
-<!--                    <el-button type="primary" @click="confirmUser">确 定</el-button>-->
-<!--                  </span>-->
-<!--      </el-dialog>-->
+      <el-dialog
+          width="75%"
+          title="用户选择"
+          :visible.sync="innerVisible"
+          append-to-body>
+        <SelectUser @doSelectUser="doSelectUser"></SelectUser>
+        <span slot="footer" class="dialog-footer">
+                    <el-button @click="innerVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="confirmUser">确 定</el-button>
+                  </span>
+      </el-dialog>
 
-<!--      <el-form ref="form1" :rules="rules1" :model="form1" label-width="80px">-->
-<!--        <el-form-item label="物品名">-->
-<!--          <el-col :span="20">-->
-<!--            <el-input v-model="form1.goodsname" readonly></el-input>-->
-<!--          </el-col>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="申请人">-->
-<!--          <el-col :span="20">-->
-<!--            <el-input v-model="form1.username" readonly @click.native="selectUser"></el-input>-->
-<!--          </el-col>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="数量" prop="count">-->
-<!--          <el-col :span="20">-->
-<!--            <el-input v-model="form1.count"></el-input>-->
-<!--          </el-col>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="备注" prop="remark">-->
-<!--          <el-col :span="20">-->
-<!--            <el-input type="textarea" v-model="form1.remark"></el-input>-->
-<!--          </el-col>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
-<!--      <span slot="footer" class="dialog-footer">-->
-<!--    <el-button @click="inDialogVisible = false">取 消</el-button>-->
-<!--    <el-button type="primary" @click="doInGoods">确 定</el-button>-->
-<!--  </span>-->
-<!--    </el-dialog>-->
+      <el-form ref="form1" :rules="rules1" :model="form1" label-width="80px">
+        <el-form-item label="物品名">
+          <el-col :span="20">
+            <el-input v-model="form1.goodsname" readonly></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="申请人" prop="username">
+          <el-col :span="20">
+            <el-input v-model="form1.username" readonly @click.native="selectUser"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="数量" prop="count">
+          <el-col :span="20">
+            <el-input v-model="form1.count"maxlength="5"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark" >
+          <el-col :span="20">
+            <el-input type="textarea" v-model="form1.remark" maxlength="20"></el-input>
+          </el-col>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="inDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="doInGoods">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -220,7 +220,14 @@ export default {
         action:'1'
       },
       rules1: {
-
+        username: [
+          {required: true, message: '请选择申请人', trigger: 'blur'}
+        ],
+        count: [
+          {required: true, message: '请输入数量', trigger: 'blur'},
+          {pattern: /^([1-9][0-9]*){1,4}$/,message: '数量必须为正整数字',trigger: "blur"},
+          {validator:checkCount,trigger: 'blur'}
+        ]
       },
       rules: {
         name: [
@@ -258,6 +265,7 @@ export default {
       let temp =  this.storageData.find(item=>{
         return item.id == row.storage
       })
+
       return temp && temp.name
     },
     formatGoodstype(row){

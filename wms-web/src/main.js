@@ -7,6 +7,8 @@ import axios from "axios";
 import VueRouter from "vue-router";
 import router from "./router";
 import store from "./store";
+import TreeTable from 'vue-table-with-tree-grid'
+Vue.component('tree-table', TreeTable)
 Vue.prototype.$axios=axios;
 /*全局部署*/
 Vue.prototype.$httpUrl='http://localhost:8090'

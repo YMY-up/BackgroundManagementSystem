@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom: 5px;">
-      <el-input v-model="name" placeholder="请输入仓库名" suffix-icon="el-icon-search" style="width: 200px;"
+      <el-input v-model="name"  maxlength="5" placeholder="请输入仓库名" suffix-icon="el-icon-search" style="width: 200px;"
                 @keyup.enter.native="loadPost"></el-input>
       <el-button type="primary" style="margin-left: 5px;" @click="loadPost">查询</el-button>
       <el-button type="success" @click="resetParam">重置</el-button>
@@ -12,15 +12,15 @@
               :header-cell-style="{ background: '#f2f5fc', color: '#555555' }"
               border
     >
-      <el-table-column prop="id" label="ID" width="60">
-      </el-table-column>
+<!--      <el-table-column prop="id" label="ID" width="60">-->
+<!--      </el-table-column>-->
       <el-table-column prop="name" label="仓库名" width="180">
       </el-table-column>
       <el-table-column prop="remark" label="备注">
       </el-table-column>
       <el-table-column prop="operate" label="操作">
         <template slot-scope="scope">
-          <el-button size="small" type="success" @click="mod(scope.row)" style="margin-left:90px ">编辑</el-button>
+          <el-button size="small" type="success" @click="mod(scope.row)" style="margin-left:100px ">编辑</el-button>
           <el-popconfirm
               title="确定删除吗？"
               @confirm="del(scope.row.id)"
@@ -50,12 +50,12 @@
       <el-form ref="form" :rules="rules" :model="form" label-width="80px">
         <el-form-item label="仓库名" prop="name">
           <el-col :span="20">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" maxlength="10"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-col :span="20">
-            <el-input type="textarea" v-model="form.remark"></el-input>
+            <el-input type="textarea" v-model="form.remark" maxlength="20"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
@@ -125,7 +125,6 @@ export default {
       })
     },
     add(){
-
       this.centerDialogVisible = true
       this.$nextTick(()=>{
         this.resetForm()

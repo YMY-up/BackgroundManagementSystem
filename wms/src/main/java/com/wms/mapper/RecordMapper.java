@@ -8,15 +8,6 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.wms.entity.Record;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-/**
- * <p>
- *  Mapper 接口
- * </p>
- *
- * @author wms
- * @since 2022-10-16
- */
 @Mapper
 public interface RecordMapper extends BaseMapper<Record> {
     IPage pageCC(IPage<Record> page, @Param(Constants.WRAPPER) Wrapper wrapper);

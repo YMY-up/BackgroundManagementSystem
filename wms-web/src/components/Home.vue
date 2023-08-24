@@ -33,7 +33,6 @@
         <el-tag
             type="success"
             disable-transitions>{{user.roleId==0?"超级管理员":(user.roleId==1?"管理员":"用户")}}</el-tag>
-
       </el-descriptions-item>
     </el-descriptions>
 

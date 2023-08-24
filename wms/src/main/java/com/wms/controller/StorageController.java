@@ -15,39 +15,48 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author wms
- * @since 2023-07-28
- */
 @RestController
 @RequestMapping("/storage")
 public class StorageController {
     // 注入
     @Autowired
     private StorageService storageService;
-    // 新增
+
+    /**
+     * 新增
+     * @param storage 仓库对象
+     * @return  res
+     */
     @PostMapping("/save")
     public Result save(@RequestBody Storage storage){
         return storageService.save(storage)?Result.suc():Result.fail();
     }
 
-    // 删除
+    /**
+     *  根据id删除
+     * @param id 仓库id
+     * @return res
+     */
     @GetMapping("/del")
     public Result del(@RequestParam String id){
         return storageService.removeById(id)?Result.suc():Result.fail();
     }
 
-    // 修改   
+    /**
+     * 修改
+     * @param storage  仓库对象
+     * @return  res
+     */
     @PostMapping("/update")
     public Result update(@RequestBody Storage storage){
         return storageService.updateById(storage)?Result.suc():Result.fail();
     }
-    
-    // 查询
+
+    /**
+     * 分页查询
+     * @param query 分页对象
+     * @return res
+     */
     @PostMapping("/listPage")
     public Result listPage(@RequestBody QueryPageParam query){
         HashMap param = query.getParam();
@@ -66,6 +75,11 @@ public class StorageController {
         System.out.println("total=="+result.getTotal());
         return Result.suc(result.getRecords(),result.getTotal());
     }
+
+    /**
+     * 仓库集合
+     * @return res
+     */
     @GetMapping("/list")
     public Result list(){
         List list = storageService.list();

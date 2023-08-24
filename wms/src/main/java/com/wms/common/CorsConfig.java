@@ -9,6 +9,8 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 //是否发送Cookie
                 .allowCredentials(true)
+                // 访问源地址
+                .allowedOrigins("https://10.34.5.131")
                 //放⾏哪些原始域
                 .allowedOriginPatterns("*")
                 .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
