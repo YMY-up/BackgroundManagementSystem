@@ -13,6 +13,7 @@ npm i vue-router@3.5.4
 
 npm i [vuex@3.0.0](mailto:vuex@3.0.0)
 ```
+前端运行命令：npm run serve
 
 # 数据库处理
 
@@ -32,6 +33,7 @@ npm i [vuex@3.0.0](mailto:vuex@3.0.0)
 ​    url: jdbc:mysql://localhost:3306/==wms==?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
 
 其中wms修改成自己的数据库名称
+4.后端直接在idea中运行即可
 
 # 
 
