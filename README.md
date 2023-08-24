@@ -1,6 +1,12 @@
+# 技术栈
+
+jdk1.8 、Vue2、Springboot2、mybatis-plus、maven、密码md5加密处理,redis,token+jwt、axios、node.js18、element ui(vue组件库)、navicat
+
 # 前端处理
 
-在wms-web文件下打开终端，依次输入以下命令
+1.去官网下载node.js18
+
+2.在wms-web文件下打开终端，依次输入以下命令
 
 ```java
 npm install -g @vue/cli 
@@ -13,6 +19,7 @@ npm i vue-router@3.5.4
 
 npm i [vuex@3.0.0](mailto:vuex@3.0.0)
 ```
+
 前端运行命令：npm run serve
 
 # 数据库处理
@@ -30,12 +37,7 @@ npm i [vuex@3.0.0](mailto:vuex@3.0.0)
 
 3.如果数据库名称不是wms的话,修改src-main-java-resources-application.yml中的mysql-url
 
-​    url: jdbc:mysql://localhost:3306/==wms==?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/==wms==?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
 
 其中wms修改成自己的数据库名称
 4.后端直接在idea中运行即可
-
-
-
-
-
