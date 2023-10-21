@@ -1,26 +1,14 @@
 # 技术栈
 
-jdk1.8 、Vue2、Springboot2、mybatis-plus、maven、密码md5加密处理,redis,token+jwt、axios、node.js18、element ui(vue组件库)、navicat
+jdk1.8 、Vue2、Springboot2、mybatis-plus、maven、密码md5加密处理,redis,token+jwt、axios、node.js14、element ui(vue组件库)、navicat
 
 # 前端处理
 
-1.去官网下载node.js18
+1.去官网下载node.js14
 
-2.在wms-web文件下打开终端，依次输入以下命令
+2.npm install
 
-```java
-npm install -g @vue/cli 
-
-npm i element-ui -S
-
-npm install axios --save
-
-npm i vue-router@3.5.4
-
-npm i [vuex@3.0.0](mailto:vuex@3.0.0)
-```
-
-前端运行命令：npm run serve
+3.前端运行命令：npm run serve
 
 # 数据库处理
 
