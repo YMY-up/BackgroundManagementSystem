@@ -6,8 +6,8 @@ spring:
   # Mysql 8
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 加密
-    username: 输入自己的数据库账号
-    password: 输入自己的数据库密码
+    username: name
+    password: password
 
     redis:
       # redis库
